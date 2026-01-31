@@ -1,5 +1,35 @@
 import pandas as pd
 import matplotlib.pyplot as plt  
+import numpy as np
+
+# Mapa de colores para los lenguajes más comunes
+color_map = {
+    'Python': '#377eb8',    # Azul
+    'Java': '#ff7f00',      # Naranja
+    'JavaScript': '#f781bf',# Rosa
+    'C++': '#e41a1c',       # Rojo
+    'C#': '#984ea3',        # Violeta
+    'SQL': '#a65628',       # Marrón
+    'Go': '#00ddff',        # Cian
+    'Golang': '#00ddff',    # Cian (caso alternativo)
+    'MATLAB': '#ffff33',    # Amarillo
+    'Ruby': '#999999',      # Gris
+    'PHP': '#800080',       # Púrpura
+    'Rust': '#ff4500',      # Naranja oscuro
+    'Kotlin': '#ff69b4',    # Rosa intenso
+    'R data': '#20b2aa',    # Verde azulado
+    'Scratch': '#4682b4',   # Azul acero
+    'Fortran': '#b22222',   # Rojo ladrillo
+    'Visual Basic': '#daa520', # Dorado
+    'Perl': '#c0c0c0',      # Plateado
+    'Assembly language': '#8b0000', # Rojo oscuro
+    'C programming language': '#4daf4a',         # Verde
+    'Ada programming language': '#556b2f',  # Verde oliva
+}
+
+# Función para obtener un color (si el lenguaje no está en la lista, devuelve uno gris/neutro)
+def get_color(lang):
+    return color_map.get(lang, '#d9d9d9') # Gris claro para "Otros"
 
 # Abrimos los datos 
 adzuna_data = pd.read_csv("data/adzuna_lenguajes.csv")
@@ -96,11 +126,12 @@ for i in lista: # bucle para buscar en los datos de las 3 primeras empresas
     empresas_filtradas = empresas_filtradas["tecnologia"].value_counts().sort_values(ascending=False)
     empresas_filtradas = empresas_filtradas.reset_index()
     empresas_filtradas.columns = ['Lenguaje', 'Total']
+    my_colors = [get_color(lang) for lang in empresas_filtradas['Lenguaje']]
     print(f"{i}\n")
     print(f"{ubicacion}\n")
     print(f"{empresas_filtradas} \n")
     plt.figure(figsize=(10, 8))
-    empresas_filtradas.set_index("Lenguaje")["Total"].plot(kind = "pie", labels=None, textprops={'fontsize': 11, 'weight': 'bold'}) # graficamos
+    empresas_filtradas.set_index("Lenguaje")["Total"].plot(kind = "pie", labels=None, colors=my_colors, textprops={'fontsize': 11, 'weight': 'bold'}) # graficamos
     plt.title(i, fontsize=14, fontweight='bold')
     plt.ylabel('')
     total = empresas_filtradas['Total'].sum()
@@ -109,3 +140,4 @@ for i in lista: # bucle para buscar en los datos de las 3 primeras empresas
     plt.tight_layout()
     plt.show()
     empresas_filtradas = adzuna_data # reiniciamos
+
