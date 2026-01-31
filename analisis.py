@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt  
-import numpy as np
 
 # Mapa de colores para los lenguajes más comunes
 color_map = {
@@ -128,7 +127,6 @@ for i in lista: # bucle para buscar en los datos de las 3 primeras empresas
     empresas_filtradas.columns = ['Lenguaje', 'Total']
     my_colors = [get_color(lang) for lang in empresas_filtradas['Lenguaje']]
     print(f"{i}\n")
-    print(f"{ubicacion}\n")
     print(f"{empresas_filtradas} \n")
     plt.figure(figsize=(10, 8))
     empresas_filtradas.set_index("Lenguaje")["Total"].plot(kind = "pie", labels=None, colors=my_colors, textprops={'fontsize': 11, 'weight': 'bold'}) # graficamos
